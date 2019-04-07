@@ -137,11 +137,17 @@ public class NFA implements NFAInterface{
 
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
-		//TODO
-		//Will use NFAState.getTo() to get states that can be reached by symb "epsilon".
-		//Will then recursively check each of those states for additional epsilon transitions
-			//Issue: how to prevent repeats (e.g, an epsilon loop exists between two states-- infinite recursion is bad, mmk)
-		return null;
+		Set<NFAState> states = new LinkedHashSet<NFAState>();
+		Set<NFAState> newStates = s.getTo('e');
+		if(states.addAll(newStates)) //if set changed
+			for(NFAState t : newStates){
+				Set<NFAState> lowerstates = eClosure(t);
+				if(lowerstates != null)
+					states.addAll(lowerstates);
+			}
+		else
+			return null;
+		return states;
 	}
 
 }
