@@ -3,12 +3,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import fa.State;
 import fa.dfa.DFA;
-import fa.dfa.DFAState;
+
 
 /**
- * 
+ * Implementation of an NFA
  * @author Cody Palin, Dominick Edmonds
- *
  */
 public class NFA implements NFAInterface{
 	private Set<NFAState> states;
@@ -53,8 +52,13 @@ public class NFA implements NFAInterface{
 
 	@Override
 	public void addFinalState(String name) {
-		// TODO Auto-generated method stub
-		
+		NFAState s = checkIfExists(name);
+		if( s == null){
+			s = new NFAState(name, true);
+			addState(s);
+		} else {
+			System.out.println("WARNING: A state with name \"" + name + "\" already exists in the DFA");
+		}
 	}
 	
 	/**
@@ -77,8 +81,20 @@ public class NFA implements NFAInterface{
 
 	@Override
 	public void addTransition(String fromState, char onSymb, String toState) {
-		// TODO Auto-generated method stub
+		NFAState from = checkIfExists(fromState);
+		NFAState to = checkIfExists(toState);
+		if(from == null){
+			System.err.println("ERROR: No DFA state exists with name " + fromState);
+			System.exit(2);
+		} else if (to == null){
+			System.err.println("ERROR: No DFA state exists with name " + toState);
+			System.exit(2);
+		}
+		from.addTransition(onSymb, to);
 		
+		if(!alphabet.contains(onSymb)){
+			alphabet.add(onSymb);
+		}
 	}
 
 	@Override
