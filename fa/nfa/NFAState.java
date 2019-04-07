@@ -2,6 +2,7 @@ package fa.nfa;
 import fa.State;
 
 /**
+ * Implementation of an NFA state.
  * 
  * @author Cody Palin, Dominick Edmonds
  */
