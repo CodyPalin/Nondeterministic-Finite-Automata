@@ -1,5 +1,7 @@
 package fa.nfa;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,13 +22,18 @@ public class NFAState extends State {
 	}
 	
 	public void addTransition(char onSymb, NFAState to){
-		//look up key
-			//has a list already?
-				//add that shit
-			//no list?
-				//fuckin make one bud
-				//add that shit
-		//delta.put(onSymb, to);
+		if(delta.containsKey(onSymb)) { //has a list already
+			//get that list
+			List<NFAState> tempList = delta.get(onSymb);
+			tempList.add(to);
+			delta.remove(onSymb);
+			delta.put(onSymb, tempList);
+		} else { //no list exists for this symbol
+			List<NFAState> newList = new ArrayList<NFAState>(); //TODO had to choose an implementation of List. Correct choice?
+			newList.add(to);
+			delta.put(onSymb, newList);
+		}
+
 	}
 	
 	public NFAState(String name, Boolean isFinal) {
@@ -54,17 +61,15 @@ public class NFAState extends State {
 	 * @return the list of all states the symbol leads to
 	 */
 	public Set<NFAState> getTo(Character symb){ 
-		//TODO
-		Set<NFAState>retval = null;
-		//look up the key's list
-			//if the list exists
-				//return the list stored there as a Set<NFAState>
-			//if the list does not exist
-				//fuck. A B O R T!
+		Set<NFAState> retval = null;
+		List<NFAState> list = delta.get(symb);
+			if(list != null) { 
+				retval = new HashSet<NFAState>(); //I}TODO: Determine if HashSet is best option here
+				for(NFAState s : list) { 
+					retval.add(s);
+				}
+			}
 		return retval;
-			
 	}
-
-	
-	
 }
+
