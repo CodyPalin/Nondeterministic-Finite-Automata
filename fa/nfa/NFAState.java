@@ -1,9 +1,9 @@
 package fa.nfa;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import fa.State;
-import fa.dfa.DFAState;
 
 /**
  * Implementation of an NFA state.
@@ -12,7 +12,7 @@ import fa.dfa.DFAState;
  */
 public class NFAState extends State {
 	private Boolean isFinal; //To remember it's type, ala DFAState
-	private HashMap<Character,NFAState> delta; //set of transitions for this state
+	private HashMap<Character,List<NFAState>> delta; //set of transitions for this state
 	
 	public NFAState(String name){
 		initialize(name);
@@ -20,7 +20,13 @@ public class NFAState extends State {
 	}
 	
 	public void addTransition(char onSymb, NFAState to){
-		delta.put(onSymb, to);
+		//look up key
+			//has a list already?
+				//add that shit
+			//no list?
+				//fuckin make one bud
+				//add that shit
+		//delta.put(onSymb, to);
 	}
 	
 	public NFAState(String name, Boolean isFinal) {
@@ -30,7 +36,7 @@ public class NFAState extends State {
 	
 	private void initialize(String name){
 		this.name = name;
-		delta = new HashMap<Character, NFAState>();
+		delta = new HashMap<Character, List<NFAState>>();
 	}
 	
 	/**
@@ -45,24 +51,20 @@ public class NFAState extends State {
 	 * Retrieves the set of states that <code>this</code> transitions to
 	 * on the given symbol
 	 * @param symb - the alphabet symbol
-	 * @return the new states the symbol leads to
+	 * @return the list of all states the symbol leads to
 	 */
 	public Set<NFAState> getTo(Character symb){ 
 		//TODO
 		Set<NFAState>retval = null;
-		//for all transitions containing symb in delta
-		delta.forEach((k,v)->filterToKey(symb));
-			//if transition is for symb
-				//add it to list "retval"
-		//check if retval is empty
-			//if so, return null TODO: not sure on this
+		//look up the key's list
+			//if the list exists
+				//return the list stored there as a Set<NFAState>
+			//if the list does not exist
+				//fuck. A B O R T!
 		return retval;
 			
 	}
 
-	private Object filterToKey(Character symb) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }
