@@ -59,7 +59,7 @@ public class NFA implements NFAInterface{
 	}
 
 	@Override
-	public DFA getDFA() {
+	public DFA getDFA() { //THEOREM 1.39
 		// TODO Auto-generated method stub
 		return null;
 	}
