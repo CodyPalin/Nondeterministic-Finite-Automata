@@ -137,7 +137,10 @@ public class NFA implements NFAInterface{
 
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
-		// TODO Auto-generated method stub
+		//TODO
+		//Will use NFAState.getTo() to get states that can be reached by symb "epsilon".
+		//Will then recursively check each of those states for additional epsilon transitions
+			//Issue: how to prevent repeats (e.g, an epsilon loop exists between two states-- infinite recursion is bad, mmk)
 		return null;
 	}
 
