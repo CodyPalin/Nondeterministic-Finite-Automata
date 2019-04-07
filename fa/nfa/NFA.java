@@ -26,7 +26,8 @@ public class NFA implements NFAInterface{
 			s = new NFAState(name);
 			addState(s);
 		} else {
-			System.out.println("WARNING: A state who's name = \"" + name + "\" already exists in the NFA");
+			if(s.isFinal()){}
+			else System.out.println("WARNING: A state who's name = \"" + name + "\" already exists in the NFA and is not final");
 		}
 		startState = s;
 	}
@@ -53,11 +54,11 @@ public class NFA implements NFAInterface{
 	@Override
 	public void addFinalState(String name) {
 		NFAState s = checkIfExists(name);
-		if( s == null){
+		if( s == null ){
 			s = new NFAState(name, true);
 			addState(s);
 		} else {
-			System.out.println("WARNING: A state with name \"" + name + "\" already exists in the DFA");
+			System.out.println("WARNING: A state with name \"" + name + "\" already exists in the NFA");
 		}
 	}
 	
@@ -84,10 +85,10 @@ public class NFA implements NFAInterface{
 		NFAState from = checkIfExists(fromState);
 		NFAState to = checkIfExists(toState);
 		if(from == null){
-			System.err.println("ERROR: No DFA state exists with name " + fromState);
+			System.err.println("ERROR: No NFA state exists with name " + fromState);
 			System.exit(2);
 		} else if (to == null){
-			System.err.println("ERROR: No DFA state exists with name " + toState);
+			System.err.println("ERROR: No NFA state exists with name " + toState);
 			System.exit(2);
 		}
 		from.addTransition(onSymb, to);
