@@ -1,4 +1,5 @@
 package fa.nfa;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import fa.State;
 import fa.dfa.DFA;
@@ -15,7 +16,8 @@ public class NFA implements NFAInterface{
 	private Set<Character> alphabet;
 	
 	public NFA() {
-		
+		states = new LinkedHashSet<NFAState>();
+		alphabet = new LinkedHashSet<Character>();
 	}
 	
 	@Override
@@ -80,32 +82,34 @@ public class NFA implements NFAInterface{
 	}
 
 	@Override
-	public Set<? extends State> getStates() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<NFAState> getStates() {
+		return states;
 	}
 
 	@Override
-	public Set<? extends State> getFinalStates() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<NFAState> getFinalStates() {
+		Set<NFAState> ret = new LinkedHashSet<NFAState>();
+		for(NFAState s : states){
+			if(s.isFinal()){
+				ret.add(s);
+			}
+		}
+		return ret;
 	}
 
 	@Override
 	public State getStartState() {
-		// TODO Auto-generated method stub
-		return null;
+		return startState;
 	}
 
 	@Override
 	public Set<Character> getABC() {
-		// TODO Auto-generated method stub
-		return null;
+		return alphabet;
 	}
 
 	@Override
-	public DFA getDFA() { //TODO: THEOREM 1.39
-		// TODO Auto-generated method stub
+	public DFA getDFA() { 
+		//TODO: THEOREM 1.39
 		return null;
 	}
 
