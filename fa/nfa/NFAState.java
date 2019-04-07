@@ -49,6 +49,14 @@ public class NFAState extends State {
 	 */
 	public Set<NFAState> getTo(char symb){ 
 		//TODO
+		//initialize retval
+		//for all transitions in delta,
+			//if transition is for symb
+				//add it to list "retval"
+		//check if retval is empty
+			//if so, return null TODO: not sure on this
+		//return retval
+			
 	}
 	
 }
