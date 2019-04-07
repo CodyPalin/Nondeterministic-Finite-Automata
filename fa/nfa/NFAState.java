@@ -1,5 +1,9 @@
 package fa.nfa;
+import java.util.HashMap;
+import java.util.Set;
+
 import fa.State;
+import fa.dfa.DFAState;
 
 /**
  * Implementation of an NFA state.
@@ -8,7 +12,7 @@ import fa.State;
  */
 public class NFAState extends State {
 	private Boolean isFinal; //To remember it's type, ala DFAState
-	//delta //set of transitions for this state
+	private HashMap<Character,NFAState> delta; //set of transitions for this state
 	
 	public NFAState(String name){
 		initialize(name);
@@ -16,8 +20,7 @@ public class NFAState extends State {
 	}
 	
 	public void addTransition(char onSymb, NFAState to){
-		//TODO
-		//delta.put(onSymb, toState);
+		delta.put(onSymb, to);
 	}
 	
 	public NFAState(String name, Boolean isFinal) {
@@ -27,7 +30,7 @@ public class NFAState extends State {
 	
 	private void initialize(String name){
 		this.name = name;
-		//delta
+		delta = new HashMap<Character, NFAState>();
 	}
 	
 	/**
@@ -36,6 +39,16 @@ public class NFAState extends State {
 	 */
 	public boolean isFinal(){
 		return isFinal;
+	}
+	
+	/**
+	 * Retrieves the set of states that <code>this</code> transitions to
+	 * on the given symbol
+	 * @param symb - the alphabet symbol
+	 * @return the new states the symbol leads to
+	 */
+	public Set<NFAState> getTo(char symb){ 
+		//TODO
 	}
 	
 }
