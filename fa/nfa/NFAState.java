@@ -47,16 +47,22 @@ public class NFAState extends State {
 	 * @param symb - the alphabet symbol
 	 * @return the new states the symbol leads to
 	 */
-	public Set<NFAState> getTo(char symb){ 
+	public Set<NFAState> getTo(Character symb){ 
 		//TODO
 		Set<NFAState>retval = null;
-		//for all transitions in delta,
+		//for all transitions containing symb in delta
+		delta.forEach((k,v)->filterToKey(symb));
 			//if transition is for symb
 				//add it to list "retval"
 		//check if retval is empty
 			//if so, return null TODO: not sure on this
 		return retval;
 			
+	}
+
+	private Object filterToKey(Character symb) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
