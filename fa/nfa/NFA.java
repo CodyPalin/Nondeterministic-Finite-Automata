@@ -128,25 +128,22 @@ public class NFA implements NFAInterface{
 	public DFA getDFA() { 
 		//TODO: THEOREM 1.39
 		DFA retVal = new DFA();
-		
 		//BFS on the NFA for this; loop over a queue (where the queue elements are sets of NFAStates. 
+		Queue<Set<NFAState>> q = new LinkedList<>();
+		//set up start state as first element in queue
+		Set<NFAState> s = new LinkedHashSet<NFAState>();
+		s.add(startState);
+		q.add(s);
 		
 		//find DFAStates ((all subsets of states from NFA = state list for DFA))
 		//find DFAStartState = eClosure(getStartState)
-		/*find DFAFinalStates = any member of DFA's new set of state subset's from the NFA that contain 
-		 * a state that was final in the NFA
-		 */
+		//find DFAFinalStates = any member of DFA's new set of state subset's from the NFA that contain a state that was final in the NFA
 		
 		//transition function ((!))
 			//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
 				//if no transition for a symbol, go to trap state T
 				//else, verify which state it will go to in the DFAStates list
-					//After reading an input symbol, check the state you go to for epsilon closure
-					//Do this for any transitions from the state you're looking at that use the same symbol to transition
-					/*once you have everything, look at the states you've touched in this iteration of the loop.
-					 * The subset in DFAStates that contains all of those states is the one you want
-					 */
 		
 		
 		return retVal;
