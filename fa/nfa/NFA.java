@@ -127,7 +127,7 @@ public class NFA implements NFAInterface{
 	}
 	
 	//queue for getDFA
-	private Queue<Set<NFAState>> q = new LinkedList<>();
+	private Queue<Set<NFAState>> dfaStates = new LinkedList<>();
 	
 	private void findDFAStates(Set<NFAState> s){
 		for(char a : alphabet){ //for every alphabet symbol
@@ -139,9 +139,9 @@ public class NFA implements NFAInterface{
 					closureSet.addAll(eClosure(t));
 				}
 			}
-			if(!q.contains(closureSet)) //if its a new set for the queue, need to make another row for this set as a state.
+			if(!dfaStates.contains(closureSet)) //if its a new set for the queue, need to make another row for this set as a state.
 			{
-				q.add(closureSet);
+				dfaStates.add(closureSet);
 				findDFAStates(closureSet);
 			}
 		}
@@ -152,14 +152,12 @@ public class NFA implements NFAInterface{
 		DFA retVal = new DFA();
 		//BFS on the NFA for this; loop over a queue (where the queue elements are sets of NFAStates. 
 		//set up start state as first element in queue
-		
-		Set<NFAState> s = new LinkedHashSet<NFAState>();
-		s.add(startState);
-		q.add(s);
-		findDFAStates(s); //queue is now set up
-		
-		//find DFAStates ((all subsets of states from NFA = state list for DFA))
 		//find DFAStartState = eClosure(getStartState)
+		Set<NFAState> DFAStartState = eClosure(startState);
+		dfaStates.add(DFAStartState);
+		//find DFAStates ((all subsets of states from NFA = state list for DFA))
+		findDFAStates(DFAStartState); //queue is now set up
+		
 		//find DFAFinalStates = any member of DFA's new set of state subset's from the NFA that contain a state that was final in the NFA
 		
 		//transition function ((!))
