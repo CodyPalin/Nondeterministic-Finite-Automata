@@ -142,7 +142,7 @@ public class NFA implements NFAInterface{
 			if(!dfaStates.contains(closureSet)) //if its a new set for the queue, need to make another row for this set as a state.
 			{
 				dfaStates.add(closureSet);
-				findDFAStates(closureSet);
+				findDFAStates(closureSet); // TODO: might have to add transitions here somehow?
 			}
 		}
 	}
@@ -159,8 +159,19 @@ public class NFA implements NFAInterface{
 		findDFAStates(DFAStartState); //queue is now set up
 		
 		//find DFAFinalStates = any member of DFA's new set of state subset's from the NFA that contain a state that was final in the NFA
-		
-		//transition function ((!))
+		Set<Set<NFAState>> DFAFinalStates = new LinkedHashSet<Set<NFAState>>();
+		Queue<Set<NFAState>> q = dfaStates;
+		for(Set<NFAState> set: q)
+		{
+			for(NFAState state : set)
+			{
+				if (state.isFinal()){
+					DFAFinalStates.add(set);
+					break;
+				}
+			}
+		}
+		//TODO: transition function ((!)) 
 			//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
 				//if no transition for a symbol, go to trap state T
