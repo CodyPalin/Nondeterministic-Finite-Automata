@@ -1,5 +1,7 @@
 package fa.nfa;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 import fa.State;
 import fa.dfa.DFA;
@@ -123,17 +125,38 @@ public class NFA implements NFAInterface{
 	public Set<Character> getABC() {
 		return alphabet;
 	}
-
+	
+	//queue for getDFA
+	private Queue<Set<NFAState>> q = new LinkedList<>();
+	
+	private void findDFAStates(Set<NFAState> s){
+		for(char a : alphabet){ //for every alphabet symbol
+			Set<NFAState> closureSet = new LinkedHashSet<NFAState>();
+			for(NFAState state : s){ //get the union of the closure of each element in the set
+				Set<NFAState> toState = getToState(state, a); //could be multiple states a single alphabet symbol goes to
+				for(NFAState t : toState)
+				{
+					closureSet.addAll(eClosure(t));
+				}
+			}
+			if(!q.contains(closureSet)) //if its a new set for the queue, need to make another row for this set as a state.
+			{
+				q.add(closureSet);
+				findDFAStates(closureSet);
+			}
+		}
+	}
 	@Override
 	public DFA getDFA() { 
 		//TODO: THEOREM 1.39
 		DFA retVal = new DFA();
 		//BFS on the NFA for this; loop over a queue (where the queue elements are sets of NFAStates. 
-		Queue<Set<NFAState>> q = new LinkedList<>();
 		//set up start state as first element in queue
+		
 		Set<NFAState> s = new LinkedHashSet<NFAState>();
 		s.add(startState);
 		q.add(s);
+		findDFAStates(s); //queue is now set up
 		
 		//find DFAStates ((all subsets of states from NFA = state list for DFA))
 		//find DFAStartState = eClosure(getStartState)
