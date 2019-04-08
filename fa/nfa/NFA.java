@@ -127,7 +127,22 @@ public class NFA implements NFAInterface{
 	@Override
 	public DFA getDFA() { 
 		//TODO: THEOREM 1.39
-		return null;
+		DFA retVal = new DFA();
+		
+		//BFS on the NFA for this; loop over a queue (where the queue elements are sets of NFAStates. 
+		
+		//find DFAStates ((all subsets of states from NFA = state list for DFA))
+		//find DFAStartState = eClosure(getStartState)
+		//find DFAFinalStates = any member of DFA's new set of state subset's from the NFA that contain a state that was final in the NFA
+		
+		//transition function ((!))
+			//take list of DFA states from earlier; for each:
+				//check each alphabet symbol for a transition
+				//if no transition for a symbol, go to trap state T
+				//else, verify which state it will go to in the DFAStates list
+		
+		
+		return retVal;
 	}
 
 	@Override
