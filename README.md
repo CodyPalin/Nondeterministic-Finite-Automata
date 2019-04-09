@@ -17,6 +17,8 @@ you would like to test
 
 ## Discussion
 
+
+
 Discuss the issues and successes you encountered during programming
 (development). Here are some questions to get you started. You don't
 have to answer all of them in order - they are a guideline to get you
