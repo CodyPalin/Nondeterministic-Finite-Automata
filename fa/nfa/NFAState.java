@@ -16,11 +16,30 @@ public class NFAState extends State {
 	private Boolean isFinal; //To remember it's type, ala DFAState
 	private HashMap<Character,List<NFAState>> delta; //set of transitions for this state
 	
+	/**
+	 * Default constructor
+	 * @param name the state name
+	 */
 	public NFAState(String name){
 		initialize(name);
 		this.isFinal = false;
 	}
 	
+	/**
+	 * Overlaoded constructor that sets the state type
+	 * @param name the state name
+	 * @param isFinal the type of state: true - final, false - non-final.
+	 */
+	public NFAState(String name, Boolean isFinal) {
+		initialize(name);
+		this.isFinal = isFinal;
+	}
+	
+	/**
+	 * Add the transition from <code> this </code> object
+	 * @param onSymb the alphabet symbol
+	 * @param toState to DFA state
+	 */
 	public void addTransition(char onSymb, NFAState to){
 		if(delta.containsKey(onSymb)) { //has a list already
 			//get that list
@@ -36,11 +55,10 @@ public class NFAState extends State {
 
 	}
 	
-	public NFAState(String name, Boolean isFinal) {
-		initialize(name);
-		this.isFinal = isFinal;
-	}
-	
+	/**
+	 * Helper function for object creation
+	 * @param name Name of the NFA
+	 */
 	private void initialize(String name){
 		this.name = name;
 		delta = new HashMap<Character, List<NFAState>>();
