@@ -182,6 +182,10 @@ public class NFA implements NFAInterface{
 		
 		retVal.addState("T");//add trap state
 		String trapState = "T";
+		for(char abc : alphabet)
+		{
+			retVal.addTransition("T", abc, "T");
+		}
 		//TODO: transition function ((!)) 
 		//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
@@ -221,11 +225,12 @@ public class NFA implements NFAInterface{
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
 		Set<NFAState> empty = new LinkedHashSet<NFAState>();
+		empty.add(s);
 		Set<NFAState> newStates = s.getTo('e');
 		if(closureStates.addAll(newStates)) //if set changed
 			for(NFAState t : newStates){
 				Set<NFAState> lowerstates = eClosure(t);
-				if(lowerstates.isEmpty())
+				if(lowerstates.size() == 1 )
 					closureStates.addAll(lowerstates);
 			}
 		else
