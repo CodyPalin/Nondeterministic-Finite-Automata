@@ -21,22 +21,8 @@ As projected, a lot of the time spent was on the getDFA funciton, since
 it was the "bread and butter" function of this program. Most of the NFA.java
 implementation was really easy otherwise.
 
-
-
-Discuss the issues and successes you encountered during programming
-(development). Here are some questions to get you started. You don't
-have to answer all of them in order - they are a guideline to get you
-thinking.
-  * What problems did you have? What went well?
-  * What process did you go through to create the program?
-  * What did you have to research and learn on your own?
-  * What kinds of errors did you get? How did you fix them?
-  * What parts of the project did you find challenging?
-  * Is there anything that finally "clicked" for you in the process 
-  of working on this project?
-  * Is there anything that you would change about the project?
-  * Can you apply what you learned in this project to future projects?
+We also had a few issues with the eClosure method in the NFA class as well.
 
 ## Testing
 
-In addition to the provided test cases, we made *!!* more tests 
+We only used the provided tests, as we ran out of time to write additional tests.
