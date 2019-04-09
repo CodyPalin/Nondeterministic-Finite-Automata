@@ -165,17 +165,18 @@ public class NFA implements NFAInterface{
 		Queue<Set<NFAState>> q = dfaStates;
 		for(Set<NFAState> set: q)
 		{
+			boolean isFinal = false;
 			for(NFAState state : set)
 			{
 				if (state.isFinal()){
 					DFAFinalStates.add(set);
 					retVal.addFinalState(set.toString());
+					isFinal = true;
 					break;
 				}
-				else{
-					retVal.addState(set.toString());
-				}
 			}
+			if(!isFinal)
+				retVal.addState(set.toString());
 		}
 		//TODO: transition function ((!)) 
 			//take list of DFA states from earlier; for each:
