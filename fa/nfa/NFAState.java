@@ -61,7 +61,8 @@ public class NFAState extends State {
 	 * @return the list of all states the symbol leads to
 	 */
 	public Set<NFAState> getTo(Character symb){ 
-		Set<NFAState> retval = null;
+		Set<NFAState> retval = new HashSet<NFAState>();
+		retval.addAll(delta.get(symb));
 		List<NFAState> list = delta.get(symb);
 			if(list != null) { 
 				retval = new HashSet<NFAState>(); //I}TODO: Determine if HashSet is best option here
