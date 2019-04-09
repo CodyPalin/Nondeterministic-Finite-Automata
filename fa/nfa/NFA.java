@@ -130,6 +130,11 @@ public class NFA implements NFAInterface{
 	//queue for getDFA
 	private Queue<Set<NFAState>> dfaStates = new LinkedList<>();
 	
+	/**
+	 * Searches for and returns the set of states that will be in the
+	 * DFA that is equivilent to this NFA
+	 * @param s Set of states to base the search off of
+	 */
 	private void findDFAStates(Set<NFAState> s){
 		for(char a : alphabet){ //for every alphabet symbol
 			Set<NFAState> closureSet = new LinkedHashSet<NFAState>();
@@ -144,7 +149,6 @@ public class NFA implements NFAInterface{
 			{
 				dfaStates.add(closureSet);
 				findDFAStates(closureSet);
-				// TODO: might have to add transitions here somehow?
 			}
 		}
 	}
@@ -173,7 +177,7 @@ public class NFA implements NFAInterface{
 					DFAFinalStates.add(set);
 					retVal.addFinalState(set.toString());
 					isFinal = true;
-					break;
+					//break;
 				}
 			}
 			if(!isFinal)
