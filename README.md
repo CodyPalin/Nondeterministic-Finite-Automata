@@ -23,6 +23,10 @@ implementation was really easy otherwise.
 
 We also had a few issues with the eClosure method in the NFA class as well.
 
+We were unable to finish the program on time, unfortunately because of time management
+issues. Neither of us blame the other though, sometimes things just happen; We will be
+starting much earlier next time.
+
 ## Testing
 
 We only used the provided tests, as we ran out of time to write additional tests.
