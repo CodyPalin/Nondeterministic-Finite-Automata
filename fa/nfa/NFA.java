@@ -220,16 +220,16 @@ public class NFA implements NFAInterface{
 	private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
-		//Set<NFAState> states = new LinkedHashSet<NFAState>();
+		Set<NFAState> empty = new LinkedHashSet<NFAState>();
 		Set<NFAState> newStates = s.getTo('e');
 		if(closureStates.addAll(newStates)) //if set changed
 			for(NFAState t : newStates){
 				Set<NFAState> lowerstates = eClosure(t);
-				if(lowerstates != null)
+				if(lowerstates.isEmpty())
 					closureStates.addAll(lowerstates);
 			}
 		else
-			return null;
+			return empty;
 		return closureStates;
 	}
 
