@@ -178,13 +178,19 @@ public class NFA implements NFAInterface{
 			if(!isFinal)
 				retVal.addState(set.toString());
 		}
-		retVal.addState("T");//add trap state
 		
+		retVal.addState("T");//add trap state
+		String trapState = "T";
 		//TODO: transition function ((!)) 
+		//take list of DFA states from earlier; for each:
+				//check each alphabet symbol for a transition
+				//if no transition for a symbol, go to trap state T
+				//else, verify which state it will go to in the DFAStates list
 		for(Set<NFAState> set: q)
 		{
 			for(char abc : alphabet)
 			{
+				String nextStateString = trapState;
 				Set<NFAState> nextState = new LinkedHashSet<NFAState>();
 				for(NFAState state : set)
 				{
@@ -193,13 +199,14 @@ public class NFA implements NFAInterface{
 						nextState.add(toState);
 					}
 				}
-				if(nextState)
+				if(!nextState.isEmpty())
+				{
+					nextStateString = nextState.toString();
+				}
+				retVal.addTransition(set.toString(), abc, nextStateString);
 			}
 		}
-			//take list of DFA states from earlier; for each:
-				//check each alphabet symbol for a transition
-				//if no transition for a symbol, go to trap state T
-				//else, verify which state it will go to in the DFAStates list
+			
 		
 		
 		return retVal;
