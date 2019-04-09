@@ -178,7 +178,24 @@ public class NFA implements NFAInterface{
 			if(!isFinal)
 				retVal.addState(set.toString());
 		}
+		retVal.addState("T");//add trap state
+		
 		//TODO: transition function ((!)) 
+		for(Set<NFAState> set: q)
+		{
+			for(char abc : alphabet)
+			{
+				Set<NFAState> nextState = new LinkedHashSet<NFAState>();
+				for(NFAState state : set)
+				{
+					for(NFAState toState : getToState(state, abc))
+					{
+						nextState.add(toState);
+					}
+				}
+				if(nextState)
+			}
+		}
 			//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
 				//if no transition for a symbol, go to trap state T
