@@ -19,7 +19,7 @@ public class NFA implements NFAInterface{
 	public NFA() {
 		states = new LinkedHashSet<NFAState>();
 		alphabet = new LinkedHashSet<Character>();
-		alphabet.add('e');
+		//alphabet.add('e');
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class NFA implements NFAInterface{
 		}
 		from.addTransition(onSymb, to);
 		
-		if(!alphabet.contains(onSymb)){
+		if(!alphabet.contains(onSymb) && onSymb != 'e'){
 			alphabet.add(onSymb);
 		}
 	}
@@ -130,25 +130,23 @@ public class NFA implements NFAInterface{
 	//queue for getDFA
 	private Queue<Set<NFAState>> dfaStates = new LinkedList<>();
 	
-	/**
-	 * Searches for and returns the set of states that will be in the
-	 * DFA that is equivilent to this NFA
-	 * @param s Set of states to base the search off of
-	 */
 	private void findDFAStates(Set<NFAState> s){
 		for(char a : alphabet){ //for every alphabet symbol
+			if(a != 'e'){
 			Set<NFAState> closureSet = new LinkedHashSet<NFAState>();
 			for(NFAState state : s){ //get the union of the closure of each element in the set
 				Set<NFAState> toState = getToState(state, a); //could be multiple states a single alphabet symbol goes to
+				if(toState != null){
 				for(NFAState t : toState)
 				{
 					closureSet.addAll(eClosure(t));
-				}
+				}}
 			}
-			if(!dfaStates.contains(closureSet)) //if its a new set for the queue, need to make another row for this set as a state.
+			if(!dfaStates.contains(closureSet) && !closureSet.isEmpty()) //if its a new set for the queue, need to make another row for this set as a state.
 			{
 				dfaStates.add(closureSet);
 				findDFAStates(closureSet);
+			}
 			}
 		}
 	}
@@ -177,11 +175,13 @@ public class NFA implements NFAInterface{
 					DFAFinalStates.add(set);
 					retVal.addFinalState(set.toString());
 					isFinal = true;
-					//break;
+					break;
 				}
 			}
-			if(!isFinal)
+			if(!isFinal && set!=DFAStartState){
 				retVal.addState(set.toString());
+			}
+				
 		}
 		
 		retVal.addState("T");//add trap state
@@ -190,7 +190,7 @@ public class NFA implements NFAInterface{
 		{
 			retVal.addTransition("T", abc, "T");
 		}
-		//TODO: transition function ((!)) 
+		//transition function ((!)) 
 		//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
 				//if no transition for a symbol, go to trap state T
@@ -199,21 +199,26 @@ public class NFA implements NFAInterface{
 		{
 			for(char abc : alphabet)
 			{
+				if(abc != 'e'){
 				String nextStateString = trapState;
 				Set<NFAState> nextState = new LinkedHashSet<NFAState>();
 				for(NFAState state : set)
 				{
-					for(NFAState toState : getToState(state, abc))
-					{
-						nextState.add(toState);
-					}
+					Set<NFAState> toStates=  getToState(state, abc);
+					if(state != null&&toStates!=null){
+						
+						for(NFAState toState :toStates)
+						{
+							if(toState!= null)
+							nextState.addAll(eClosure(toState));
+						}}
 				}
 				if(!nextState.isEmpty())
 				{
 					nextStateString = nextState.toString();
 				}
 				retVal.addTransition(set.toString(), abc, nextStateString);
-			}
+				}}
 		}
 			
 		
@@ -225,9 +230,24 @@ public class NFA implements NFAInterface{
 	public Set<NFAState> getToState(NFAState from, char onSymb) {
 		return from.getTo(onSymb);
 	}
-	private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
+	//private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
+		Set<NFAState> states= new LinkedHashSet<NFAState>();
+		if(s.getTo('e') != null)
+		{
+			for(NFAState next : s.getTo('e'))
+			{
+				
+				states.addAll(eClosure(next)); 
+				
+					
+			}
+		}
+		states.add(s);
+		return states;
+
+		/*
 		Set<NFAState> empty = new LinkedHashSet<NFAState>();
 		empty.add(s);
 		Set<NFAState> newStates = s.getTo('e');
@@ -240,6 +260,8 @@ public class NFA implements NFAInterface{
 		else
 			return empty;
 		return closureStates;
+		*/
+		
 	}
 
 }
