@@ -130,6 +130,11 @@ public class NFA implements NFAInterface{
 	//queue for getDFA
 	private Queue<Set<NFAState>> dfaStates = new LinkedList<>();
 	
+	/**
+	 * Searches for and returns the set of states that will be in the
+	 * DFA that is equivilent to this NFA
+	 * @param s Set of states to base the search off of
+	 */
 	private void findDFAStates(Set<NFAState> s){
 		for(char a : alphabet){ //for every alphabet symbol
 			if(a != 'e'){
@@ -246,21 +251,6 @@ public class NFA implements NFAInterface{
 		}
 		states.add(s);
 		return states;
-
-		/*
-		Set<NFAState> empty = new LinkedHashSet<NFAState>();
-		empty.add(s);
-		Set<NFAState> newStates = s.getTo('e');
-		if(closureStates.addAll(newStates)) //if set changed
-			for(NFAState t : newStates){
-				Set<NFAState> lowerstates = eClosure(t);
-				if(lowerstates.size() == 1 )
-					closureStates.addAll(lowerstates);
-			}
-		else
-			return empty;
-		return closureStates;
-		*/
 		
 	}
 
