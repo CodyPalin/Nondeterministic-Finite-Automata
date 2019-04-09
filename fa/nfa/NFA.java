@@ -19,6 +19,7 @@ public class NFA implements NFAInterface{
 	public NFA() {
 		states = new LinkedHashSet<NFAState>();
 		alphabet = new LinkedHashSet<Character>();
+		alphabet.add('e');
 	}
 	
 	@Override
@@ -216,20 +217,20 @@ public class NFA implements NFAInterface{
 	public Set<NFAState> getToState(NFAState from, char onSymb) {
 		return from.getTo(onSymb);
 	}
-
+	private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
-		Set<NFAState> states = new LinkedHashSet<NFAState>();
+		//Set<NFAState> states = new LinkedHashSet<NFAState>();
 		Set<NFAState> newStates = s.getTo('e');
-		if(states.addAll(newStates)) //if set changed
+		if(closureStates.addAll(newStates)) //if set changed
 			for(NFAState t : newStates){
 				Set<NFAState> lowerstates = eClosure(t);
 				if(lowerstates != null)
-					states.addAll(lowerstates);
+					closureStates.addAll(lowerstates);
 			}
 		else
 			return null;
-		return states;
+		return closureStates;
 	}
 
 }
