@@ -17,6 +17,10 @@ you would like to test
 
 ## Discussion
 
+As projected, a lot of the time spent was on the getDFA funciton, since
+it was the "bread and butter" function of this program. Most of the NFA.java
+implementation was really easy otherwise.
+
 
 
 Discuss the issues and successes you encountered during programming
