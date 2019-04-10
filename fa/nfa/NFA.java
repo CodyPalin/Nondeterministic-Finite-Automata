@@ -189,12 +189,7 @@ public class NFA implements NFAInterface{
 				
 		}
 		
-		retVal.addState("T");//add trap state
-		String trapState = "T";
-		for(char abc : alphabet)
-		{
-			retVal.addTransition("T", abc, "T");
-		}
+		String trapState = "[]";
 		//transition function ((!)) 
 		//take list of DFA states from earlier; for each:
 				//check each alphabet symbol for a transition
@@ -221,6 +216,16 @@ public class NFA implements NFAInterface{
 				if(!nextState.isEmpty())
 				{
 					nextStateString = nextState.toString();
+				}
+				if(nextState.isEmpty() && !retVal.getStates().contains(trapState))
+				{
+					
+					retVal.addState(trapState);//add trap state
+					for(char a : alphabet)
+					{
+						retVal.addTransition(trapState, a, trapState);
+						
+					}
 				}
 				retVal.addTransition(set.toString(), abc, nextStateString);
 				}}
