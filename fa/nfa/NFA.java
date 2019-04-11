@@ -157,7 +157,7 @@ public class NFA implements NFAInterface{
 	}
 	@Override
 	public DFA getDFA() { 
-		//TODO: THEOREM 1.39
+		//THEOREM 1.39
 		DFA retVal = new DFA();
 		//BFS on the NFA for this; loop over a queue (where the queue elements are sets of NFAStates. 
 		//set up start state as first element in queue
@@ -183,7 +183,7 @@ public class NFA implements NFAInterface{
 					break;
 				}
 			}
-			if(!isFinal && set!=DFAStartState){
+			if(!isFinal && !set.equals(DFAStartState)){
 				retVal.addState(set.toString());
 			}
 				
@@ -227,8 +227,10 @@ public class NFA implements NFAInterface{
 						
 					}
 				}
+				
 				retVal.addTransition(set.toString(), abc, nextStateString);
-				}}
+				}
+			}
 		}
 			
 		
