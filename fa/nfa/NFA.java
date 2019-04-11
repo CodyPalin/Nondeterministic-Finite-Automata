@@ -240,23 +240,35 @@ public class NFA implements NFAInterface{
 	public Set<NFAState> getToState(NFAState from, char onSymb) {
 		return from.getTo(onSymb);
 	}
-	//private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
+
+	private Set<NFAState> closureStates = new LinkedHashSet<NFAState>();
 	@Override
 	public Set<NFAState> eClosure(NFAState s) {
+		
+		
+		Set<NFAState> r = eClosure2(s);
+		closureStates.clear();
+		return r; 
+	}
+	private Set<NFAState> eClosure2(NFAState s){
 		Set<NFAState> states= new LinkedHashSet<NFAState>();
-		if(s.getTo('e') != null)
+		Set<NFAState> getto =s.getTo('e');
+		if( getto != null && !(closureStates.containsAll(getto)))
 		{
-			for(NFAState next : s.getTo('e'))
+			closureStates.addAll(getto);
+			states.addAll(getto);
+			for(NFAState next : getto)
 			{
 				
-				states.addAll(eClosure(next)); 
-				
+				Set<NFAState> x = eClosure2(next);
+				states.addAll(x);
+				closureStates.addAll(x);
 					
 			}
 		}
 		states.add(s);
+		closureStates.add(s);
 		return states;
-		
 	}
 
 }
