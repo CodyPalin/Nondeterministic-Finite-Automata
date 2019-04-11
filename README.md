@@ -25,4 +25,9 @@ We also had a few issues with the eClosure method in the NFA class as well.
 
 ## Testing
 
-We only used the provided tests, as we ran out of time to write additional tests.
+Using the provided tests we were able to ensure that test 0 and 1 functioned
+correctly, however test 3 and 4 seem to fail, despite our best efforts to fix
+any issues. While debugging test 3, we found that the program worked as 
+intended while debugging, printing out the correct string, but while
+running it throws an error, this greatly confused us and made debugging the 
+issue impossible.
